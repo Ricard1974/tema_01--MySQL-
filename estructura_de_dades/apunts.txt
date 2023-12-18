@@ -1,0 +1,135 @@
+CREATE TABLE trasactions (
+    transactions_id     INT PRIMARY KEY AUTO_INCREMENT=1000,
+    amount DECIMAL (5,2),
+    customer_id INT,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+
+ALTER DATABASE optica2 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+###### CREACION DE LA TABLA PROVEEDOR ###########
+
+
+CREATE DATABASE optica2;
+USE optica2;
+
+CREATE TABLE optica2.proveedor (
+  id_proveedor INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  nombre_proveedor VARCHAR(50) NOT NULL,
+  calle VARCHAR(50),
+  numero INT,
+  piso INT,
+  puerta VARCHAR(5),
+  ciudad VARCHAR(50),
+  codigo_postal INT(5),
+  pais VARCHAR(50),
+  telefono VARCHAR(15),
+  fax VARCHAR(15),
+  nif VARCHAR(9)
+);
+
+
+############ INSERTAR DATOS EN PROVVEEDOR ################
+
+INSERT INTO optica2.proveedor (nombre_proveedor,cproveedorproveedoralle, numero, piso, puerta, ciudad, codigo_postal, pais, telefono, fax, nif)
+VALUES ('Óptica XYZ', 'Calle Mayor', 123, 1, 'A', 'Barcelona', '08001', 'España', '931234567', '931234568', 'A12345678');
+
+
+
+
+############### crear tabla gafas #################3
+
+
+CREATE TABLE gafas (
+  id_gafas INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  marca VARCHAR(50) NOT NULL,
+  graduacion_derecha VARCHAR(5) NOT NULL,
+  graduacion_izquierda VARCHAR(5) NOT NULL,
+  montura ENUM('flotante', 'pasta', 'metalica') NOT NULL,
+  color_montura VARCHAR(50) NOT NULL,
+  color_cristal_derecho VARCHAR(10) NOT NULL,
+  color_cristal_izquierdo VARCHAR(10) NOT NULL,
+  precio DECIMAL(10,2) NOT NULL
+);
+
+########### insercion de datos en gafas ####################
+
+INSERT INTO gafas (marca, graduacion_derecha, graduacion_izquierda, montura, color_montura, color_cristal_derecho, color_cristal_izquierdo, precio)
+VALUES ('Ray-Ban', '+2,00', '-1,50', 'flotante', 'negro', 'gris', 'marron', 150.00);
+
+
+################ crear tabla clientes #####################
+
+CREATE TABLE `optica2`.`new_table` (
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COMMENT = 'comentarios';
+
+
+
+CREATE TABLE optica2.clientes (
+    id_cliente INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nombre_cliente VARCHAR (50) NOT NULL,
+    apellido_cliente VARCHAR (50) NOT NULL,
+    codigo_postal INT(6),
+    telefono_cliente VARCHAR (15),
+    email_cliente VARCHAR(50),
+    fecha_registro_cliente DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+);
+
+
+INSERT INTO clientes (nombre_cliente, apellido_cliente, codigo_postal, telefono_cliente, email_cliente, fecha_registro_cliente)
+VALUES ('Juan', 'Pérez', 12345, '666666666', 'juan@perez.com', '2023-12-25 12:00:00');
+
+
+################### creacion tabla empleado ##################3
+
+CREATE TABLE optica2.empleados (
+    id_empleado INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nombre_empleado VARCHAR(50),
+    apellido_empleado VARCHAR(50)
+);
+
+INSERT INTO empleados (nombre_empleado,apellido_empleado)
+VALUES ('Manu','Estemad');
+
+
+#################### creacion tabla recomendacion #############
+
+CREATE TABLE recomendaciones (
+    id_recomendacion INT NOT NULL AUTO_INCREMENT PRIMARY KEY
+)
+
+
+#################### creacion de tabla de ventas #############
+
+CREATE TABLE ventas (
+    id_ventas INT NOT NULL AUTO_INCREMENT,
+    id_empleado INT NOT NULL,
+  FOREIGN KEY (id_empleado) REFERENCES empleados (id_empleado),
+    id_gafas INT NOT NULL,
+    FOREIGN KEY (id_gafas) REFERENCES  gafas (id_gafas),
+    id_cliente INT NOT NULL,
+    FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente)
+
+);
+
+
+
+
+ALTER TABLE transactions
+DROP FOREIGN KEY nombredelallaveforanea;
+
+
+ALTER TABLE transactions
+ADD CONSTRAINT fk_customers_id
+FOREIGN KEY(customer_id) REFERENCES customers(customer_id);
+
+
+
+INSERT INTO transactions (amount,customer_id) 
+VALUES  (4.99, 3),
+        (2.55,2),
+        (1.99,3),
+        (4.33,4);
